@@ -1,4 +1,3 @@
-import { createSampleTransactions } from '../data/sampleData'
 import {
   CURRENCIES,
   DEFAULT_SETTINGS,
@@ -43,12 +42,12 @@ function sanitizeTransaction(raw) {
 }
 
 /**
- * Loads saved transactions. Sample data is only used when nothing has ever been saved,
- * so existing user data is never replaced.
+ * Loads saved transactions. Nothing is added automatically: the tracker starts
+ * empty until the user saves their first transaction.
  */
 export function loadTransactions() {
   const { found, value } = readJSON(KEYS.transactions)
-  if (!found) return createSampleTransactions()
+  if (!found) return []
   return Array.isArray(value) ? value.map(sanitizeTransaction).filter(Boolean) : []
 }
 
